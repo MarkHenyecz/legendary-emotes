@@ -1,5 +1,3 @@
-TriggerServerEvent("dp:CheckVersion")
-
 rightPosition = {x = 1450, y = 100}
 leftPosition = {x = 0, y = 100}
 menuPosition = {x = 0, y = 200}
@@ -297,13 +295,6 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         _menuPool:ProcessMenus()
     end
-end)
-
-RegisterNetEvent("dp:Update")
-AddEventHandler("dp:Update", function(state)
-    UpdateAvailable = state
-    AddInfoMenu(mainMenu)
-    _menuPool:RefreshIndex()
 end)
 
 RegisterNetEvent("dp:RecieveMenu") -- For opening the emote menu from another resource.

@@ -23,7 +23,7 @@ Config = {
 	CustomMenuEnabled = false,
 	MenuImage = "https://i.imgur.com/kgzvDwQ.png",
 -- You can change the menu position here
-	MenuPosition = "right", -- (left, right)
+	MenuPosition = "left", -- (left, right)
 -- You can disable the Ragdoll keybinding here.
 	RagdollEnabled = true,
 	RagdollKeybind = 303, -- Get the button number here https://docs.fivem.net/game-references/controls/
@@ -33,9 +33,9 @@ Config = {
 	WalkingStylesEnabled = true,	
 -- You can disable the Shared Emotes here.
     SharedEmotesEnabled = true,
-    CheckForUpdates = true,
+    CheckForUpdates = false,
 -- If you have the SQL imported enable this to turn on keybinding.
-    SqlKeybinding = true,
+    SqlKeybinding = false,
 }
 
 Config.KeybindKeys = {
