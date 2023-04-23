@@ -73,7 +73,7 @@ RegisterCommand('walks', function(source, args, raw) WalksOnCommand() end)
 
 AddEventHandler('onResourceStop', function(resource)
   if resource == GetCurrentResourceName() then
-    DestroyAllProps()
+    DestroyAllProps(true)
     ClearPedTasksImmediately(GetPlayerPed(-1))
     ResetPedMovementClipset(PlayerPedId())
   end
@@ -240,9 +240,11 @@ function PtfxThis(asset)
   UseParticleFxAssetNextCall(asset)
 end
 
-function DestroyAllProps()
+function DestroyAllProps(forceDelete)
   for _,v in pairs(PlayerProps) do
-    DeleteEntity(v)
+    if(GetEntityAttachedTo(v) == PlayerPedId() or forceDelete) then
+      DeleteEntity(v)
+    end
   end
   PlayerHasProp = false
   DebugPrint("Destroyed Props")
@@ -405,9 +407,9 @@ function OnEmotePlay(EmoteName, Ped)
 
   if EmoteName.AnimationOptions then
     if EmoteName.AnimationOptions.Prop then
-        PropName = EmoteName.AnimationOptions.Prop
-        PropBone = EmoteName.AnimationOptions.PropBone
-        PropPl1, PropPl2, PropPl3, PropPl4, PropPl5, PropPl6 = table.unpack(EmoteName.AnimationOptions.PropPlacement)
+        local PropName = EmoteName.AnimationOptions.Prop
+        local PropBone = EmoteName.AnimationOptions.PropBone
+        local PropPl1, PropPl2, PropPl3, PropPl4, PropPl5, PropPl6 = table.unpack(EmoteName.AnimationOptions.PropPlacement)
         if EmoteName.AnimationOptions.SecondProp then
           SecondPropName = EmoteName.AnimationOptions.SecondProp
           SecondPropBone = EmoteName.AnimationOptions.SecondPropBone
