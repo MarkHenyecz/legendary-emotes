@@ -248,8 +248,7 @@ function DestroyAllProps()
   DebugPrint("Destroyed Props")
 end
 
-function AddPropToPlayer(prop1, bone, off1, off2, off3, rot1, rot2, rot3)
-  local Player = PlayerPedId()
+function AddPropToPlayer(prop1, bone, off1, off2, off3, rot1, rot2, rot3, Player)
   local x,y,z = table.unpack(GetEntityCoords(Player))
 
   if not HasModelLoaded(prop1) then
@@ -286,9 +285,12 @@ end
 ------ This is the major function for playing emotes! -----------------------------------------------
 -----------------------------------------------------------------------------------------------------
 
-function OnEmotePlay(EmoteName)
+function OnEmotePlay(EmoteName, Ped)
+  if not Ped then
+    Ped = PlayerPedId()
+  end 
 
-  InVehicle = IsPedInAnyVehicle(PlayerPedId(), true)
+  InVehicle = IsPedInAnyVehicle(Ped, true)
   if not Config.AllowedInCars and InVehicle == 1 then
     return
   end
@@ -311,7 +313,7 @@ function OnEmotePlay(EmoteName)
   end
 
   if ChosenDict == "Expression" then
-    SetFacialIdleAnimOverride(PlayerPedId(), ChosenAnimation, 0)
+    SetFacialIdleAnimOverride(Ped, ChosenAnimation, 0)
     return
   end
 
@@ -327,9 +329,9 @@ function OnEmotePlay(EmoteName)
         EmoteChatMessage(Config.Languages[lang]['maleonly'])
       end return
     elseif ChosenDict == "ScenarioObject" then if InVehicle then return end
-      BehindPlayer = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 0 - 0.5, -0.5);
+      BehindPlayer = GetOffsetFromEntityInWorldCoords(Ped, 0.0, 0 - 0.5, -0.5);
       ClearPedTasks(GetPlayerPed(-1))
-      TaskStartScenarioAtPosition(GetPlayerPed(-1), ChosenAnimation, BehindPlayer['x'], BehindPlayer['y'], BehindPlayer['z'], GetEntityHeading(PlayerPedId()), 0, 1, false)
+      TaskStartScenarioAtPosition(GetPlayerPed(-1), ChosenAnimation, BehindPlayer['x'], BehindPlayer['y'], BehindPlayer['z'], GetEntityHeading(Ped), 0, 1, false)
       DebugPrint("Playing scenario = ("..ChosenAnimation..")")
       IsInAnimation = true
       return
@@ -415,9 +417,9 @@ function OnEmotePlay(EmoteName)
           SecondPropEmote = false
         end
         Wait(AttachWait)
-        AddPropToPlayer(PropName, PropBone, PropPl1, PropPl2, PropPl3, PropPl4, PropPl5, PropPl6)
+        AddPropToPlayer(PropName, PropBone, PropPl1, PropPl2, PropPl3, PropPl4, PropPl5, PropPl6, Ped)
         if SecondPropEmote then
-          AddPropToPlayer(SecondPropName, SecondPropBone, SecondPropPl1, SecondPropPl2, SecondPropPl3, SecondPropPl4, SecondPropPl5, SecondPropPl6)
+          AddPropToPlayer(SecondPropName, SecondPropBone, SecondPropPl1, SecondPropPl2, SecondPropPl3, SecondPropPl4, SecondPropPl5, SecondPropPl6, Ped)
         end
     end
   end
