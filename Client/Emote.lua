@@ -295,13 +295,13 @@ function OnEmotePlay(EmoteName, Ped)
     return
   end
 
-  if not DoesEntityExist(GetPlayerPed(-1)) then
+  if not DoesEntityExist(Ped) then
     return false
   end
 
   if Config.DisarmPlayer then
-    if IsPedArmed(GetPlayerPed(-1), 7) then
-      SetCurrentPedWeapon(GetPlayerPed(-1), GetHashKey('WEAPON_UNARMED'), true)
+    if IsPedArmed(Ped, 7) then
+      SetCurrentPedWeapon(Ped, GetHashKey('WEAPON_UNARMED'), true)
     end
   end
 
@@ -321,8 +321,8 @@ function OnEmotePlay(EmoteName, Ped)
     CheckGender()
     if ChosenDict == "MaleScenario" then if InVehicle then return end
       if PlayerGender == "male" then
-        ClearPedTasks(GetPlayerPed(-1))
-        TaskStartScenarioInPlace(GetPlayerPed(-1), ChosenAnimation, 0, true)
+        ClearPedTasks(Ped)
+        TaskStartScenarioInPlace(Ped, ChosenAnimation, 0, true)
         DebugPrint("Playing scenario = ("..ChosenAnimation..")")
         IsInAnimation = true
       else
@@ -330,14 +330,14 @@ function OnEmotePlay(EmoteName, Ped)
       end return
     elseif ChosenDict == "ScenarioObject" then if InVehicle then return end
       BehindPlayer = GetOffsetFromEntityInWorldCoords(Ped, 0.0, 0 - 0.5, -0.5);
-      ClearPedTasks(GetPlayerPed(-1))
-      TaskStartScenarioAtPosition(GetPlayerPed(-1), ChosenAnimation, BehindPlayer['x'], BehindPlayer['y'], BehindPlayer['z'], GetEntityHeading(Ped), 0, 1, false)
+      ClearPedTasks(Ped)
+      TaskStartScenarioAtPosition(Ped, ChosenAnimation, BehindPlayer['x'], BehindPlayer['y'], BehindPlayer['z'], GetEntityHeading(Ped), 0, 1, false)
       DebugPrint("Playing scenario = ("..ChosenAnimation..")")
       IsInAnimation = true
       return
     elseif ChosenDict == "Scenario" then if InVehicle then return end
-      ClearPedTasks(GetPlayerPed(-1))
-      TaskStartScenarioInPlace(GetPlayerPed(-1), ChosenAnimation, 0, true)
+      ClearPedTasks(Ped)
+      TaskStartScenarioInPlace(Ped, ChosenAnimation, 0, true)
       DebugPrint("Playing scenario = ("..ChosenAnimation..")")
       IsInAnimation = true
     return end 
@@ -397,7 +397,7 @@ function OnEmotePlay(EmoteName, Ped)
     end
   end
 
-  TaskPlayAnim(GetPlayerPed(-1), ChosenDict, ChosenAnimation, 2.0, 2.0, AnimationDuration, MovementType, 0, false, false, false)
+  TaskPlayAnim(Ped, ChosenDict, ChosenAnimation, 2.0, 2.0, AnimationDuration, MovementType, 0, false, false, false)
   RemoveAnimDict(ChosenDict)
   IsInAnimation = true
   MostRecentDict = ChosenDict

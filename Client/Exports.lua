@@ -4,6 +4,12 @@ AddEventHandler("lrp:client:getEmotes", function(cb)
 end)
 
 RegisterNetEvent("lrp:client:playAnimation")
-AddEventHandler("lrp:client:playAnimation", function()
-    
+AddEventHandler("lrp:client:playAnimation", function(ped, animation)
+    local emote = DP.Emotes[animation]
+
+    if emote == nil then
+        emote = DP.PropEmotes[animation] 
+    end
+
+    OnEmotePlay(emote, ped)
 end)
