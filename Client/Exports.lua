@@ -13,3 +13,12 @@ AddEventHandler("lrp:client:playAnimation", function(ped, animation)
 
     OnEmotePlay(emote, ped)
 end)
+
+RegisterNetEvent("lrp:client:deletePropsForPed")
+AddEventHandler("lrp:client:deletePropsForPed", function(ped)
+    if pedProps[ped] then
+        for _, prop in pairs(pedProps[ped]) do
+            DeleteEntity(prop)
+        end 
+    end
+end)
